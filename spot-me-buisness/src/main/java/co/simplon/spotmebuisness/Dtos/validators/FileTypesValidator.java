@@ -13,16 +13,16 @@ public class FileTypesValidator implements ConstraintValidator<FileTypes, Multip
     private List<String> types;
 
     @Override
-    public void initialize(FileTypes file) {
-	types = Arrays.asList(file.types());
+    public void initialize(FileTypes annotation) {
+	types = Arrays.asList(annotation.types());
     }
 
     @Override
     public boolean isValid(MultipartFile file, ConstraintValidatorContext context) {
-	if (types.contains(file.getContentType().replace("image/", ""))) {
+	if (file == null) {
 	    return true;
 	}
-	return false;
+	return types.contains(file.getContentType());
     }
 
 }

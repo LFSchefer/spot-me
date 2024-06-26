@@ -20,6 +20,10 @@ public @interface FileSize {
 
     Class<? extends Payload>[] payload() default {};
 
-    int max();
+    static final long ONE_MB = 1024 * 1024;
+
+    static final long TWO_MB = ONE_MB * 2;
+
+    long max() default FileSize.TWO_MB;
 
 }

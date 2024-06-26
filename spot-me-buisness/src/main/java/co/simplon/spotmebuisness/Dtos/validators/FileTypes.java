@@ -6,6 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.springframework.http.MediaType;
+
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -20,6 +22,6 @@ public @interface FileTypes {
 
     Class<? extends Payload>[] payload() default {};
 
-    String[] types();
+    String[] types() default { MediaType.IMAGE_JPEG_VALUE };
 
 }

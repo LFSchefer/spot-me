@@ -1,11 +1,15 @@
 package co.simplon.spotmebuisness.controllers;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.spotmebuisness.Dtos.SpotCreate;
+import co.simplon.spotmebuisness.services.SpotService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -13,15 +17,16 @@ import jakarta.validation.Valid;
 @RequestMapping("/spots")
 public class SpotController {
 
+    private final SpotService service;
+
+    public SpotController(SpotService service) {
+	this.service = service;
+    }
+
     // @Requestbody => txt/json
     @PostMapping
-    public void create(@ModelAttribute @Valid SpotCreate inputs) {
-//	System.out.println(inputs);
-//	MultipartFile image = inputs.image();
-//	System.out.println(inputs.image().getContentType());
-//	System.out.println(image.getOriginalFilename());
-//	System.out.println(image.getSize());
-
+    public void create(@ModelAttribute @Valid SpotCreate inputs) throws FileNotFoundException, IOException {
+	service.create(inputs);
     }
 
 }
