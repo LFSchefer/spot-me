@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import co.simplon.spotmebuisness.Dtos.SpotCreate;
 import co.simplon.spotmebuisness.entities.Spot;
@@ -30,24 +31,44 @@ public class SpotService {
 	entity.setDescription(inputs.description());
 	entity.setLat(inputs.lat());
 	entity.setLng(inputs.lng());
-	entity.setImageId(generateImageId(inputs));
-	fileUpload(inputs, entity.getImageId());
+	entity.setImageId(generateImageId(inputs.image()));
+	fileUpload(inputs.image(), entity.getImageId());
 	spots.save(entity);
     }
 
-    private void fileUpload(SpotCreate inputs, String imageId) {
+    private void fileUpload(MultipartFile image, String imageId) {
 	File file = new File(dest.concat("/" + imageId));
 	try (FileOutputStream outputStream = new FileOutputStream(file)) {
-	    outputStream.write(inputs.image().getBytes());
+	    outputStream.write(image.getBytes());
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
 	;
     }
 
-    private String generateImageId(SpotCreate inputs) {
+    private String generateImageId(MultipartFile image) {
 	UUID uuid = UUID.randomUUID();
-	return uuid.toString().concat(inputs.image().getContentType().replace("image/", "."));
+	return uuid.toString().concat(image.getContentType().replace("image/", "."));
     }
+
+    // Frank correction
+
+//    private String buildImageId(MultipartFile image) {
+//	UUID uuid = UUID.randomUUID();
+//	String name = image.getOriginalFilename();
+//	int index = name.lastIndexOf('.');
+//	String ext = name.substring(index, name.length());
+//	return uuid + ext;
+//    }
+//
+//    private void storeImage(MultipartFile image, String imageId) {
+//	try {
+//	    String dest = String.format("%s/%s", uploadsDest, imageId);
+//	    File file = new File(dest);
+//	    image.transferTo(file);
+//	} catch (Exception ex) {
+//	    throw new RuntimeException(ex);
+//	}
+//    }
 
 }
