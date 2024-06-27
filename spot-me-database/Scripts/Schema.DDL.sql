@@ -6,7 +6,7 @@ CREATE TABLE t_spots(
 	spot_lat DECIMAL(9,6),
 	spot_lng DECIMAL(9,6),
 	spot_desc VARCHAR(2000),
-	spot_img VARCHAR(100),
+	spot_img VARCHAR(41),
 	CONSTRAINT t_spot_pkey PRIMARY KEY (id_spot),
 	CONSTRAINT t_spot_ukey UNIQUE (spot_name, spot_lat, spot_lng)
 );

@@ -1,8 +1,5 @@
 package co.simplon.spotmebuisness.controllers;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +22,7 @@ public class SpotController {
 
     // @Requestbody => txt/json
     @PostMapping
-    public void create(@ModelAttribute @Valid SpotCreate inputs) throws FileNotFoundException, IOException {
+    public void create(@ModelAttribute @Valid SpotCreate inputs) {
 	service.create(inputs);
     }
 
