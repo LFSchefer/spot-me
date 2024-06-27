@@ -31,8 +31,10 @@ public class SpotService {
 	entity.setDescription(inputs.description());
 	entity.setLat(inputs.lat());
 	entity.setLng(inputs.lng());
-	entity.setImageId(generateImageId(inputs.image()));
-	fileUpload(inputs.image(), entity.getImageId());
+	if (inputs.image() != null) {
+	    entity.setImageId(generateImageId(inputs.image()));
+	    fileUpload(inputs.image(), entity.getImageId());
+	}
 	spots.save(entity);
     }
 
