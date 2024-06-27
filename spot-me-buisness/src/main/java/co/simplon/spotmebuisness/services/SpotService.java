@@ -3,6 +3,7 @@ package co.simplon.spotmebuisness.services;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import co.simplon.spotmebuisness.Dtos.SpotCreate;
+import co.simplon.spotmebuisness.Dtos.SpotView;
 import co.simplon.spotmebuisness.entities.Spot;
 import co.simplon.spotmebuisness.repositories.SpotRepository;
 
@@ -38,6 +40,10 @@ public class SpotService {
 	spots.save(entity);
     }
 
+    public Collection<SpotView> getAll() {
+	return spots.findAllProjectedBy();
+    }
+
     private void fileUpload(MultipartFile image, String imageId) {
 	File file = new File(dest.concat("/" + imageId));
 	try (FileOutputStream outputStream = new FileOutputStream(file)) {
@@ -51,6 +57,10 @@ public class SpotService {
     private String generateImageId(MultipartFile image) {
 	UUID uuid = UUID.randomUUID();
 	return uuid.toString().concat(image.getContentType().replace("image/", "."));
+    }
+
+    public void deleteOne(Long id) {
+	spots.deleteById(id);
     }
 
     // Frank correction
