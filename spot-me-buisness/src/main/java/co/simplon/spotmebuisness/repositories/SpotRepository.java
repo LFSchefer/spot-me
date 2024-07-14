@@ -13,4 +13,6 @@ public interface SpotRepository extends JpaRepository<Spot, Long> {
 
     Collection<SpotView> findAllProjectedBy();
 
+    Collection<Spot> findAllProjectedByNameAndLatAndLng(String name, double lat, double lng);
+
 }
